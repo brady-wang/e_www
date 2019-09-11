@@ -1,6 +1,18 @@
 <?php
+namespace www\swoole;
+
+
 //创建Server对象，监听 127.0.0.1:9501端口
 $serv = new Swoole\Server("192.168.33.60", 9501);
+
+$serv->set(array(
+    'reactor_num' => 2, //reactor thread num
+    'worker_num' => 4,    //worker process num
+    'backlog' => 128,   //listen backlog
+    'max_request' => 50,
+    'dispatch_mode' => 1,
+    'heartbeat_idle_time'=>3
+));
 
 //监听连接进入事件
 $serv->on('Connect', function ($serv, $fd) {
